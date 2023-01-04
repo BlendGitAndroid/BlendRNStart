@@ -1,108 +1,98 @@
 import React, { Component } from 'react';
 import {
-    FlatList,
+    SectionList,
     StyleSheet,
     Text,
     View,
     RefreshControl,
-    ActivityIndicator,
+    ActivityIndicator
 } from 'react-native';
 
-const CITY_NAMES = [
-    '北京',
-    '上海',
-    '广州',
-    '深圳',
-    '杭州',
-    '苏州',
-    '成都',
-    '武汉',
-    '郑州',
-    '洛阳',
-    '厦门',
-    '青岛',
-    '拉萨',
-];
-export default class FlatListDemo extends Component {
+const CITY_NAMES = [{ data: ['北京', '上海', '广州', '深圳'], title: "一线" }, {
+    data: ['杭州', '苏州', '成都', '武汉',],
+    title: "二三线1"
+}, { data: ['郑州', '洛阳', '厦门', '青岛', '拉萨'], title: "二三线2" }];
+export default class SectionListDemo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dataArray: CITY_NAMES,
-            isLoading: false,
-        };
+            isLoading: false
+        }
     }
 
     _renderItem(data) {
-        return (
-            <View style={styles.item}>
-                <Text style={styles.text}>{data.item}</Text>
-            </View>
-        );
+        return <View style={styles.item}>
+            <Text style={styles.text}>{data.item}</Text>
+        </View>
+    }
+
+    _renderSectionHeader({ section }) {
+        debugger
+        return <View style={styles.sectionHeader}>
+            <Text style={styles.text}>{section.title}</Text>
+        </View>
     }
 
     loadData(refresh) {
         if (refresh) {
             this.setState({
-                isLoading: true,
+                isLoading: true
             });
         }
         setTimeout(() => {
             let dataArray = [];
             if (refresh) {
                 for (let i = this.state.dataArray.length - 1; i >= 0; i--) {
-                    dataArray.push(this.state.dataArray[i]);
+                    dataArray.push(this.state.dataArray[i])
                 }
             } else {
                 dataArray = this.state.dataArray.concat(CITY_NAMES);
             }
             this.setState({
                 dataArray: dataArray,
-                isLoading: false,
+                isLoading: false
             });
         }, 2000);
     }
 
     genIndicator() {
-        return (
-            <View style={styles.indicatorContainer}>
-                <ActivityIndicator
-                    style={styles.indicator}
-                    size="large"
-                    animating={true}
-                />
-                <Text>正在加载更多</Text>
-            </View>
-        );
+        return <View style={styles.indicatorContainer}>
+            <ActivityIndicator
+                style={styles.indicator}
+                size='large'
+                animating={true}
+            />
+            <Text>正在加载更多</Text>
+        </View>
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
-                    //这里的data是一个数组
-                    data={this.state.dataArray}
-                    //data是一个ListRenderItem对象，里面有一个item和index属性
-                    renderItem={data => this._renderItem(data)}
+                <SectionList
+                    sections={this.state.dataArray}
+                    renderItem={(data => this._renderItem(data))}
+                    renderSectionHeader={(data) => this._renderSectionHeader(data)}
                     // refreshing={this.state.isLoading}
                     // onRefresh={() => {
                     //     this.loadData();
                     // }}
-                    //下拉刷新
                     refreshControl={
                         <RefreshControl
-                            title="Loading..."
+                            title='Loading...'
                             colors={['red']}
                             refreshing={this.state.isLoading}
                             onRefresh={() => this.loadData(true)}
                             tintColor={'orange'}
                         />
                     }
-                    //设置尾部组件
                     ListFooterComponent={() => this.genIndicator()}
                     onEndReached={() => {
-                        this.loadData();
+                        this.loadData()
                     }}
                 />
+
             </View>
         );
     }
@@ -111,25 +101,29 @@ export default class FlatListDemo extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fafafa'
     },
     item: {
-        height: 200,
-        backgroundColor: '#169',
-        marginLeft: 15,
-        marginRight: 15,
+        height: 80,
         marginBottom: 15,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white'
+    },
+    sectionHeader: {
+        height: 50,
+        backgroundColor: '#93ebbe',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     text: {
-        color: 'white',
-        fontSize: 20,
+        fontSize: 20
     },
     indicatorContainer: {
-        alignItems: 'center',
+        alignItems: "center"
     },
     indicator: {
         color: 'red',
-        margin: 10,
-    },
+        margin: 10
+    }
 });

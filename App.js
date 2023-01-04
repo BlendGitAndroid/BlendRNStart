@@ -12,7 +12,6 @@ import {
   Button,
   StyleSheet,
   View,
-  SafeAreaView,
 } from 'react-native';
 
 export default class App extends Component {
@@ -27,6 +26,13 @@ export default class App extends Component {
             navigation.navigate("FlatListDemo")
           }}
         ></Button>
+
+        <Button
+          title={"SectionListDemo"}
+          onPress={() => {
+            navigation.navigate("SectionListDemo")
+          }}
+        />
       </View>
     )
   }
