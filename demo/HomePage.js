@@ -45,6 +45,10 @@ export default class HomePage extends React.Component {
                 <Button title={'底部导航'} onPress={() => {
                     navigation.navigate('BottomTabNavigator');
                 }} />
+
+                <Button title={'顶部导航'} onPress={() => {
+                    navigation.navigate('TopTabNavigator');
+                }} />
             </View>
         )
     }

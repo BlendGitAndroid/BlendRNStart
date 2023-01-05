@@ -10,6 +10,52 @@ import Page3 from "../Page3";
 import { Button, Text, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+const TopTabNavigator = createMaterialTopTabNavigator(
+    {
+        Page1: {
+            screen: Page1,
+            navigationOptions: {
+                tabBarLabel: 'Page1',
+            }
+        },
+        Page2: {
+            screen: Page2,
+            navigationOptions: {
+                tabBarLabel: ({ tintColor, focused }) => (//自定义Tab文字
+                    <Text style={{ color: focused ? 'orange' : 'grey' }}>Page2</Text>
+                ),
+            }
+        },
+        Page3: {
+            screen: Page3,
+            navigationOptions: {
+                tabBarLabel: 'Page3',
+            }
+        },
+    },
+    {
+        tabBarOptions: {
+            // activeTintColor: 'red'
+            tabStyle: { //tab样式
+                minWidth: 50
+            },
+            upperCaseLabel: false,//是否使标签大写，默认为true,
+            style: {
+                backgroundColor: '#879'
+            },
+            indicatorStyle: {//指示器样式
+                height: 2,
+                backgroundColor: 'white'
+            },
+            labelStyle: {//文字的样式
+                fontSize: 13,
+                marginTop: 6,
+                marginBottom: 6
+            }
+        }
+    }
+)
+
 const BottomTabNavigator = createBottomTabNavigator(
     {
         //配置页面路由
@@ -63,6 +109,12 @@ export const AppStackNavigator = createStackNavigator(
             navigationOptions: {
                 title: '底部导航器',
                 headerShown: false
+            }
+        },
+        TopTabNavigator: {
+            screen: TopTabNavigator,
+            navigationOptions: {
+                title: '顶部导航器'
             }
         },
         FlatListDemo: {
