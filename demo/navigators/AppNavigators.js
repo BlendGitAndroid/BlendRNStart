@@ -54,8 +54,10 @@ export const AppStackNavigator = createStackNavigator(
                     title: params.name ? params.name : "This is Page3",
                     headerRight: (
                         <Button
+                            //mode是params可以设置的一个参数
                             title={params.mode === 'edit' ? '保存' : "编辑"}
                             onPress={() => {
+                                //设置mode参数
                                 setParams({ mode: params.mode === 'edit' ? "" : 'edit' })
                             }}
                         />

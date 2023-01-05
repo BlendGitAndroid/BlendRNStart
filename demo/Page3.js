@@ -18,6 +18,7 @@ export default class Page3 extends React.Component {
             <TextInput
                 style={styles.input}
                 onChangeText={text => {
+                    //设置标题
                     setParams({ name: text });
                 }
                 }
