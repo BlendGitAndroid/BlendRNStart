@@ -1,13 +1,54 @@
 import React from "react"
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import FlatListDemo from '../FlatListDemo';
 import SectionListDemo from '../SectionListDemo';
 import HomePage from '../HomePage';
 import Page1 from "../Page1";
 import Page2 from "../Page2";
 import Page3 from "../Page3";
-import {Button, Text, ScrollView} from 'react-native';
+import { Button, Text, ScrollView } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
+const BottomTabNavigator = createBottomTabNavigator(
+    {
+        //配置页面路由
+        Page1: {
+            screen: Page1,
+            navigationOptions: {
+                tabBarLabel: 'Page1',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Ionicons
+                        name={'ios-home'}
+                        size={26}
+                        style={{ color: tintColor }}
+                    />
+                )
+            }
+        },
+        Page2: {
+            screen: Page2,
+            navigationOptions: {
+                tabBarLabel: ({ tintColor, focused }) => (//自定义Tab文字
+                    <Text style={{ color: focused ? 'orange' : 'grey', textAlign: 'center' }}>Page2</Text>
+                ),
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Ionicons
+                        name={'ios-people'}
+                        size={26}
+                        style={{ color: focused ? 'orange' : 'grey' }}
+                    />
+                )
+            }
+        }
+
+    },
+    {
+        tabBarOptions: {
+            activeTintColor: 'red'
+        }
+    }
+)
 
 export const AppStackNavigator = createStackNavigator(
     {
@@ -15,6 +56,13 @@ export const AppStackNavigator = createStackNavigator(
             screen: HomePage,
             navigationOptions: {
                 title: '首页'
+            }
+        },
+        BottomTabNavigator: {
+            screen: BottomTabNavigator,
+            navigationOptions: {
+                title: '底部导航器',
+                headerShown: false
             }
         },
         FlatListDemo: {

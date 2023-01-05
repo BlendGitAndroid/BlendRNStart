@@ -41,6 +41,10 @@ export default class HomePage extends React.Component {
                         navigation.navigate("Page3", { name: "Page3的界面" })
                     }}
                 />
+
+                <Button title={'底部导航'} onPress={() => {
+                    navigation.navigate('BottomTabNavigator');
+                }} />
             </View>
         )
     }
