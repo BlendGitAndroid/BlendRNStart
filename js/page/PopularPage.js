@@ -13,9 +13,10 @@ export default class PopularPage extends Component {
 
     _genTabs() {
         const tabs = {};
+        //这其实是一个回调，后面的(item,index) => {} ,就是一个函数，要理解这个
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                //设置界面，并传递参数
+                //设置界面，并传递参数，这么遍历创建PopularTab页面
                 screen: props => <PopularTab {...props} tabLabel={item}></PopularTab>,
                 navigationOptions: {
                     title: item,

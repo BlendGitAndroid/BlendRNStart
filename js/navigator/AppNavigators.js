@@ -16,6 +16,7 @@ const InitNavigator = createStackNavigator(
 );
 
 const MainNavigator = createStackNavigator({
+    //主页
     HomePage: {
         screen: HomePage,
         navigationOptions: {

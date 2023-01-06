@@ -9,6 +9,7 @@ export default class MyPage extends Component {
                 <Text style={styles.welcome}>MyPage</Text>
                 <Button
                     title={'修改主题'}
+                    //设置修改主题的值
                     onPress={() => navigation.setParams(
                         {
                             theme: {

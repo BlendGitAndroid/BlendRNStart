@@ -80,7 +80,7 @@ export default class DynamicTabNavigator extends Component {
     _tabNavigator() {
         const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
         const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage };
-        PopularPage.navigationOptions.tabBarLabel = "最热1";    //动态修改Tab属性
+        PopularPage.navigationOptions.tabBarLabel = "最热";    //动态修改Tab属性
         return createAppContainer(createBottomTabNavigator(
             tabs,
             {
@@ -108,14 +108,19 @@ class TabBarComponent extends Component {
     }
 
     render() {
+        //从navigation的state解析出routes和index，用于区别是点击哪一个tab
         const { routes, index } = this.props.navigation.state;
+        //如果index的params有设置的值
         if (routes[index].params) {
+            //从这个值中解析出theme
             const { theme } = routes[index].params;
             //以最新的更新时间为主，防止被其他tab之前的修改覆盖掉
+            //如果这个theme有值，并且这个值大于他之前的值，则进行更新
             if (theme && theme.updateTime > this.theme.updateTime) {
                 this.theme = theme;
             }
         }
+        //最新进行传值
         return <BottomTabBar {...this.props} activeTintColor={this.theme.tintColor || this.props.activeTintColor}>
         </BottomTabBar>
     }
