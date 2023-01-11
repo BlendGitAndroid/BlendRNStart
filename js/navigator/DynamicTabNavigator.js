@@ -8,6 +8,7 @@ import MyPage from "../page/MyPage";
 import { createAppContainer } from "react-navigation";
 import { BottomTabBar, createBottomTabNavigator } from "react-navigation-tabs";
 import FavoritePage from "../page/FavoritePage";
+import { connect } from "react-redux";
 
 
 //在这里配置页面的路由
@@ -70,7 +71,7 @@ const TABS = {
     },
 }
 
-export default class DynamicTabNavigator extends Component {
+class DynamicTabNavigator extends Component {
 
     constructor(props) {
         super(props);
@@ -78,13 +79,18 @@ export default class DynamicTabNavigator extends Component {
     }
 
     _tabNavigator() {
+        if (this.Tabs) {
+            return this.Tabs;
+        }
         const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
         const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage };
         PopularPage.navigationOptions.tabBarLabel = "最热";    //动态修改Tab属性
-        return createAppContainer(createBottomTabNavigator(
+        return this.Tabs = createAppContainer(createBottomTabNavigator(
             tabs,
             {
-                tabBarComponent: TabBarComponent,
+                tabBarComponent: props => {
+                    return <TabBarComponent theme={this.props.theme}{...props}/>;
+                },
             }
         ))
     }
@@ -98,31 +104,44 @@ export default class DynamicTabNavigator extends Component {
 
 class TabBarComponent extends Component {
 
-    constructor(props) {
-        super(props);
-        //设置原始的主题
-        this.theme = {
-            tintColor: props.activeTintColor,
-            updateTime: new Date().getTime(),
-        }
-    }
+    // constructor(props) {
+    //     super(props);
+    //     //设置原始的主题
+    //     this.theme = {
+    //         tintColor: props.activeTintColor,
+    //         updateTime: new Date().getTime(),
+    //     }
+    // }
+
+    // render() {
+    //     //从navigation的state解析出routes和index，用于区别是点击哪一个tab
+    //     const { routes, index } = this.props.navigation.state;
+    //     //如果index的params有设置的值
+    //     if (routes[index].params) {
+    //         //从这个值中解析出theme
+    //         const { theme } = routes[index].params;
+    //         //以最新的更新时间为主，防止被其他tab之前的修改覆盖掉
+    //         //如果这个theme有值，并且这个值大于他之前的值，则进行更新
+    //         if (theme && theme.updateTime > this.theme.updateTime) {
+    //             this.theme = theme;
+    //         }
+    //     }
+    //     //最新进行传值
+    //     return <BottomTabBar {...this.props} activeTintColor={this.theme.tintColor || this.props.activeTintColor}>
+    //     </BottomTabBar>
+    // }
 
     render() {
-        //从navigation的state解析出routes和index，用于区别是点击哪一个tab
-        const { routes, index } = this.props.navigation.state;
-        //如果index的params有设置的值
-        if (routes[index].params) {
-            //从这个值中解析出theme
-            const { theme } = routes[index].params;
-            //以最新的更新时间为主，防止被其他tab之前的修改覆盖掉
-            //如果这个theme有值，并且这个值大于他之前的值，则进行更新
-            if (theme && theme.updateTime > this.theme.updateTime) {
-                this.theme = theme;
-            }
-        }
-        //最新进行传值
-        return <BottomTabBar {...this.props} activeTintColor={this.theme.tintColor || this.props.activeTintColor}>
-        </BottomTabBar>
+        return <BottomTabBar
+            {...this.props}
+            activeTintColor={this.props.theme}
+        />;
     }
 
 }
+
+const mapStateToProps = state => ({
+    theme: state.theme.theme,
+})
+
+export default connect(mapStateToProps)(DynamicTabNavigator)

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createMaterialTopTabNavigator } from "react-navigation-tabs";
+import { connect } from 'react-redux';
 import NavigationUtil from "../navigator/NavigationUtil";
 
-export default class PopularPage extends Component {
+class PopularPage extends Component {
 
     constructor(props) {
         super(props);
@@ -95,3 +96,8 @@ const styles = StyleSheet.create({
     },
 
 })
+
+const mapDispatchToProps = dispatch => ({
+    onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
+});
+export default connect(null, mapDispatchToProps)(PopularPage);
