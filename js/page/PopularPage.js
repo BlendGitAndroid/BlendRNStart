@@ -97,7 +97,17 @@ const styles = StyleSheet.create({
 
 })
 
-const mapDispatchToProps = dispatch => ({
-    onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
-});
-export default connect(null, mapDispatchToProps)(PopularPage);
+/**
+ * 将dispatch加入到Props中
+ * mapDispatchToProps其实是一个方法，dispatch是一个入参，
+ * 里面是一个key:value的形式，只不过这个value是一个方法的返回值
+ *  
+ */
+// const mapDispatchToProps = dispatch => ({
+//     onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
+// });
+// export default connect(null, mapDispatchToProps)(PopularPage);
+
+export default connect(null, (dispatch) => ({
+    onThemeChange: (theme => dispatch(actions.onThemeChange(theme))),
+}))(PopularPage);

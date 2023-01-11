@@ -16,6 +16,25 @@ const logger = store => next => action => {
     return result;
 };
 
+/**
+ * 上面的是下面的方法糖
+ */
+const logger1 = function (store) {
+    return function (next) {
+        return function (action) {
+            if (typeof action === 'function') {
+                console.log('dispatching a function');
+            } else {
+                console.log('dispatching', action);
+            }
+            //这里的next就是将action继续下发
+            const result = next(action);
+            console.log('nextState', store.getState());
+            return result;
+        }
+    }
+}
+
 const middlewares = [
     thunk,
     logger,

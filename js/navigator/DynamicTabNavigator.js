@@ -79,6 +79,8 @@ class DynamicTabNavigator extends Component {
     }
 
     _tabNavigator() {
+        //这里有一个Tabs的变量，用于判断Tabs是否已经存在
+        //因为state改变后，需要重新绘制，为了避免每次都回到首页，加一个这个判断
         if (this.Tabs) {
             return this.Tabs;
         }
@@ -140,6 +142,7 @@ class TabBarComponent extends Component {
 
 }
 
+//之所以这样写，是因为connect的第一个参数是state，第二个是dispatct
 const mapStateToProps = state => ({
     theme: state.theme.theme,
 })
