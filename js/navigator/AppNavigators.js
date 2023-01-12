@@ -1,5 +1,6 @@
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import AsyncStorageDemoPage from "../../demo/AsyncStorageDemoPage";
 import FetchDemoPage from "../../demo/FetchDemoPage";
 import DetailPage from "../page/DetailPage";
 import HomePage from "../page/HomePage";
@@ -27,6 +28,7 @@ const MainNavigator = createStackNavigator({
     //详情页
     DetailPage: DetailPage,
     FetchDemoPage: FetchDemoPage,
+    AsyncStorageDemoPage: AsyncStorageDemoPage,
 });
 
 

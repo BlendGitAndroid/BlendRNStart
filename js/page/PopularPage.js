@@ -70,6 +70,11 @@ class PopularTab extends Component {
                         NavigationUtil.goPage({}, 'FetchDemoPage');
                     }
                 }>跳转FetchDemo</Text>
+                                <Text onPress={
+                    () => {
+                        NavigationUtil.goPage({}, 'AsyncStorageDemoPage');
+                    }
+                }>跳转AsyncStorageDemo</Text>
             </View>
         )
     }
