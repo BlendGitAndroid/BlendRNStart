@@ -42,5 +42,12 @@ const middlewares = [
 
 /**
  * 2. 创建store
+ * 
+ * Redux中带有推送功能的数据仓库
+ * 
+ * 会将整个应用状态(其实也就是数据)存储到到一个地方，称为store
+ * 这个store里面保存一棵状态树(state tree)
+ * 
+ * 组件改变state的唯一方法是通过调用store的dispatch方法，触发一个action，这个action被对应的reducer处理，于是state完成更新
  */
 export default createStore(reducers, applyMiddleware(...middlewares));

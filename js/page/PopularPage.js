@@ -118,6 +118,17 @@ const styles = StyleSheet.create({
 // });
 // export default connect(null, mapDispatchToProps)(PopularPage);
 
+/**
+ * connect：这是 react-redux 提供的一个方法。如果一个组件想要响应状态的变化，就把自己作为参数传给 connect() 的结果，
+ * connect() 方法会处理与 store 绑定的细节，并通过 selector 确定该绑定 store 中哪一部分的数据。
+ * react-redux提供了connect函数，connect是一个高阶函数，首先传入mapStateToProps、mapDispatchToProps，然后返回一个生产
+ *  Component 的函数(wrapWithConnect)，然后再将真正的Component作为参数传入wrapWithConnect(MyComponent)，这样就生产出
+ * 一个经过包裹的Connect组件，如:export default connect(mapStateToProps)(HomePage);
+ * 
+ * dispatch：每当你想要改变应用中的状态时，你就要 dispatch 一个 action，这也是唯一改变状态的方法。
+ * 
+ * 
+ */
 export default connect(null, (dispatch) => ({
     onThemeChange: (theme => dispatch(actions.onThemeChange(theme))),
 }))(PopularPage);
