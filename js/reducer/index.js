@@ -1,5 +1,7 @@
 const { combineReducers } = require("redux");
-import theme from "./reducer_theme"
+import theme from "./reducer_theme";
+import language from "./reducer_language"
+import popular from "./reducer_popular"
 
 /**
  * 1. 合并reducer
@@ -8,6 +10,8 @@ import theme from "./reducer_theme"
 const index = combineReducers(
     {
         theme: theme,
+        popular: popular,
+        language: language,
     }
 )
 

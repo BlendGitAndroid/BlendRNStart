@@ -1,34 +1,62 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, Text, StyleSheet, RefreshControl, FlatList } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 import { connect } from 'react-redux';
+import NavigationBar from '../common/NavigationBar';
 import NavigationUtil from "../navigator/NavigationUtil";
+import { FLAG_LANGUAGE } from "../expand/LanguageDao";
+import actions from '../action/index'
+import PopularItem from '../common/PopularItem';
+import Toast from 'react-native-easy-toast';
+import FavoriteDao from "../expand/FavoriteDao";
+import { FLAG_STORAGE } from "../expand/DataStore";
+
+const URL = 'https://api.github.com/search/repositories?q=';
+const QUERY_STR = '&sort=stars';
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 
 class PopularPage extends Component {
 
     constructor(props) {
         super(props);
-        this.tabNames = ['Java', 'Android', 'iOS', 'React', 'React Native', 'PHP'];
+        const { onLoadLanguage } = this.props;
+        onLoadLanguage(FLAG_LANGUAGE.flag_key);
     }
 
     _genTabs() {
         const tabs = {};
         //这其实是一个回调，后面的(item,index) => {} ,就是一个函数，要理解这个
-        this.tabNames.forEach((item, index) => {
-            tabs[`tab${index}`] = {
-                //设置界面，并传递参数，这么遍历创建PopularTab页面
-                screen: props => <PopularTab {...props} tabLabel={item}></PopularTab>,
-                navigationOptions: {
-                    title: item,
-                },
+        const { keys, theme } = this.props;
+        keys.forEach((item, index) => {
+            if (item.checked) {
+                tabs[`tab${index}`] = {
+                    //设置界面，并传递参数，这么遍历创建PopularTab页面
+                    screen: props => <PopularTabPage {...props} tabLabel={item} theme={theme}></PopularTabPage>,
+                    navigationOptions: {
+                        title: item.name,
+                    },
+                }
             }
         })
         return tabs;
     }
 
     render() {
-        const TabNavigator = createAppContainer(createMaterialTopTabNavigator(
+        const { keys, theme } = this.props;
+
+        let statusBar = {
+            backgroundColor: theme.themeColor,
+            barStyle: 'light-content',
+        };
+
+        let navigationBar = <NavigationBar
+            title={'最热'}
+            statusBar={statusBar}
+            style={theme.styles.navBar}
+        />;
+
+        const TabNavigator = keys.length ? createAppContainer(createMaterialTopTabNavigator(
             this._genTabs(),
             {
                 tabBarOptions: {
@@ -36,50 +64,158 @@ class PopularPage extends Component {
                     upperCaseLabel: false,  //取消全部大写
                     scrollEnabled: true,    //可以滑动
                     style: {
-                        backgroundColor: '#a67',
+                        backgroundColor: theme.themeColor,//TabBar 的背景颜色
                     },
                     indicatorStyle: styles.indicatorStyle,  //指示器的样式
                     labelStyle: styles.labelStyle,  //label的样式
                 },
             }
-        ));
+        )) : null;
         return (
             <View style={styles.container}>
-                <TabNavigator />
+                {navigationBar}
+                {TabNavigator && <TabNavigator />}
             </View>
         )
     }
 
 }
 
+const pageSize = 10;//设为常量，防止修改
 class PopularTab extends Component {
 
-    render() {
-        return (
-            <View>
-                <Text>
-                    PopularTab
-                </Text>
-                <Text onPress={
-                    () => {
-                        NavigationUtil.goPage({}, 'DetailPage');
-                    }
-                }>跳转到详情页</Text>
-                <Text onPress={
-                    () => {
-                        NavigationUtil.goPage({}, 'FetchDemoPage');
-                    }
-                }>跳转FetchDemo</Text>
-                                <Text onPress={
-                    () => {
-                        NavigationUtil.goPage({}, 'AsyncStorageDemoPage');
-                    }
-                }>跳转AsyncStorageDemo</Text>
+    constructor(props) {
+        super(props);
+        const { tabLabel } = this.props;
+        this.storeName = tabLabel;
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    loadData(loadMore, refreshFavorite) {
+        const { onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite } = this.props;
+        const store = this._store();
+        const url = this.genFetchUrl(this.storeName);
+        if (loadMore) {
+            onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, favoriteDao, callback => {
+                this.refs.toast.show('没有更多了');
+            })
+        } else if (refreshFavorite) {
+            onFlushPopularFavorite(this.storeName, store.pageIndex, pageSize, store.items, favoriteDao);
+        } else {
+            onRefreshPopular(this.storeName, url, pageSize, favoriteDao)
+        }
+    }
+
+    /**
+    * 获取与当前页面有关的数据
+    * @returns {*}
+    * @private
+    */
+    _store() {
+        const { popular } = this.props;
+        let store = popular[this.storeName];
+        if (!store) {
+            store = {
+                items: [],
+                isLoading: false,
+                projectModels: [],//要显示的数据
+                hideLoadingMore: true,//默认隐藏加载更多
+            }
+        }
+        return store;
+    }
+
+    genFetchUrl(key) {
+        return URL + key + QUERY_STR;
+    }
+
+    renderItem(data) {
+        const item = data.item;
+        const { theme } = this.props;
+        return <PopularItem
+            projectModel={item}
+            theme={theme}
+            onSelect={(callback) => {
+                NavigationUtil.goPage({
+                    theme,
+                    projectModel: item,
+                    flag: FLAG_STORAGE.flag_popular,
+                    callback,
+                }, 'DetailPage')
+                //  this.props.navigation.navigate('tab1');//跳转到createMaterialTopTabNavigator中的指定tab，主要这个navigation一定要是在跳转到createMaterialTopTabNavigator中的指页面获取的
+            }}
+            onFavorite={(item, isFavorite) => console.log("11")}
+        />
+    }
+
+    genIndicator(theme) {
+        return this._store().hideLoadingMore ? null :
+            <View style={styles.indicatorContainer}>
+                <ActivityIndicator color={theme.themeColor} size="large"
+                    style={{ margin: 10 }}
+                />
+                <Text>正在加载更多</Text>
             </View>
-        )
+    }
+
+    render() {
+        let store = this._store();
+        const { theme } = this.props;
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    data={store.projectModels}
+                    renderItem={data => this.renderItem(data)}
+                    keyExtractor={item => "" + item.item.id}
+                    refreshControl={
+                        <RefreshControl
+                            title={'Loading'}
+                            titleColor={theme.themeColor}
+                            colors={[theme.themeColor]}
+                            refreshing={store.isLoading}
+                            onRefresh={() => this.loadData()}
+                            tintColor={theme.themeColor}
+                        />
+                    }
+                    ListFooterComponent={() => this.genIndicator(theme)}
+                    onEndReached={() => {
+                        console.log('---onEndReached----');
+                        setTimeout(() => {
+                            if (this.canLoadMore) {//fix 滚动时两次调用onEndReached https://github.com/facebook/react-native/issues/14015
+                                this.loadData(true);
+                                this.canLoadMore = false;
+                            }
+                        }, 100);
+                    }}
+                    onEndReachedThreshold={0.5}
+                    onMomentumScrollBegin={() => {
+                        this.canLoadMore = true; //fix 初始化时页调用onEndReached的问题
+                        console.log('---onMomentumScrollBegin-----')
+                    }}
+                />
+                <Toast ref={'toast'}
+                    position={'center'}
+                />
+            </View>
+        );
     }
 
 }
+
+const mapStateToProps = state => ({
+    popular: state.popular
+});
+const mapDispatchToProps = dispatch => ({
+    //将 dispatch(onRefreshPopular(storeName, url))绑定到props
+    onRefreshPopular: (storeName, url, pageSize, favoriteDao) => dispatch(actions.onRefreshPopular(storeName, url, pageSize, favoriteDao)),
+    onLoadMorePopular: (storeName, pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, favoriteDao, callBack)),
+    onFlushPopularFavorite: (storeName, pageIndex, pageSize, items, favoriteDao) => dispatch(actions.onFlushPopularFavorite(storeName, pageIndex, pageSize, items, favoriteDao)),
+});
+//注意：connect只是个function，并不应定非要放在export后面
+const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab)
 
 const styles = StyleSheet.create({
 
@@ -101,9 +237,11 @@ const styles = StyleSheet.create({
     },
     labelStyle: {
         fontSize: 13,
-        marginTop: 6,
-        marginBottom: 6,
+        margin: 0,
     },
+    indicatorContainer: {
+        alignItems: "center"
+    }
 
 })
 
@@ -129,6 +267,12 @@ const styles = StyleSheet.create({
  * 
  * 
  */
-export default connect(null, (dispatch) => ({
-    onThemeChange: (theme => dispatch(actions.onThemeChange(theme))),
-}))(PopularPage);
+const mapPopularStateToProps = state => ({
+    keys: state.language.keys,
+    theme: state.theme.theme,
+});
+const mapPopularDispatchToProps = dispatch => ({
+    onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag))
+});
+//注意：connect只是个function，并不应定非要放在export后面
+export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(PopularPage);

@@ -22,7 +22,7 @@ const MainNavigator = createStackNavigator({
     HomePage: {
         screen: HomePage,
         navigationOptions: {
-            header: null,//隐藏头部
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
         },
     },
     //详情页
@@ -39,7 +39,7 @@ export default createAppContainer(createSwitchNavigator(
     },
     {
         navigationOptions: {
-            header: null,
-        }
+            headerShown: false,
+        },
     }
 ))
