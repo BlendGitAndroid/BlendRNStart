@@ -13,6 +13,7 @@ import NavigationUtil from '../navigator/NavigationUtil';
 import FavoriteUtil from '../util/FavoriteUtil';
 import EventBus from 'react-native-event-bus';
 import EventTypes from '../util/EventTypes';
+import TrendingItem from '../common/TrendingItem';
 
 class FavoritePage extends Component {
 

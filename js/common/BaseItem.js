@@ -26,6 +26,7 @@ export default class BaseItem extends Component {
      */
     static getDerivedStateFromProps(nextProps, prevState) {
         const isFavorite = nextProps.projectModel.isFavorite;
+        console.log("111-- " + isFavorite + "--" + prevState.isFavorite);
         if (prevState.isFavorite !== isFavorite) {
             return {
                 isFavorite: isFavorite,
@@ -35,7 +36,7 @@ export default class BaseItem extends Component {
     }
 
     setFavoriteState(isFavorite) {
-        // this.props.projectModel.isFavorite = isFavorite;
+        this.props.projectModel.isFavorite = isFavorite;
         this.setState({
             isFavorite: isFavorite,
         })
