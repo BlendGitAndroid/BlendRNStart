@@ -32,7 +32,7 @@ class PopularPage extends Component {
             if (item.checked) {
                 tabs[`tab${index}`] = {
                     //设置界面，并传递参数，这么遍历创建PopularTab页面
-                    screen: props => <PopularTabPage {...props} tabLabel={item} theme={theme}></PopularTabPage>,
+                    screen: props => <PopularTabPage {...props} tabLabel={item.name} theme={theme}></PopularTabPage>,
                     navigationOptions: {
                         title: item.name,
                     },
@@ -69,6 +69,7 @@ class PopularPage extends Component {
                     indicatorStyle: styles.indicatorStyle,  //指示器的样式
                     labelStyle: styles.labelStyle,  //label的样式
                 },
+                lazy: true
             }
         )) : null;
         return (
@@ -98,6 +99,7 @@ class PopularTab extends Component {
         const { onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite } = this.props;
         const store = this._store();
         const url = this.genFetchUrl(this.storeName);
+        console.log("key11:" + url)
         if (loadMore) {
             onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, favoriteDao, callback => {
                 this.refs.toast.show('没有更多了');

@@ -6,6 +6,11 @@
     "checked": true
   },
   {
+    "path": "Android",
+    "name": "Android",
+    "checked": true
+  },
+  {
     "path": "iOS",
     "name": "iOS",
     "checked": true
@@ -33,6 +38,6 @@
   {
     "path": "react",
     "name": "React",
-    "checked": true
+    "checked": false
   }
 ]
