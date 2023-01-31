@@ -2,6 +2,7 @@ const { combineReducers } = require("redux");
 import theme from "./reducer_theme";
 import language from "./reducer_language"
 import popular from "./reducer_popular"
+import favorite from "./reducer_favorite"
 
 /**
  * 1. 合并reducer
@@ -12,6 +13,7 @@ const index = combineReducers(
         theme: theme,
         popular: popular,
         language: language,
+        favorite: favorite,
     }
 )
 
