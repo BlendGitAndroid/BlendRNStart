@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import BackPressComponent from '../common/BackPressComponent';
 import FavoriteDao from '../expand/FavoriteDao';
 import NavigationUtil from '../navigator/NavigationUtil';
 import { WebView } from 'react-native-webview';
 import NavigationBar, { NAVIGATION_BAR_HEIGHT } from '../common/NavigationBar';
 import ViewUtil from '../util/ViewUtil';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 const TRENDING_URL = 'https://github.com/';
 
@@ -55,6 +56,35 @@ export default class DetailPage extends Component {
         })
     }
 
+    onFavoriteButtonClick() {
+        const { projectModel, callback } = this.params;
+        const isFavorite = projectModel.isFavorite = !projectModel.isFavorite;
+        callback(isFavorite);//更新Item的收藏状态
+        this.setState({
+            isFavorite: isFavorite,
+        });
+        let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString();
+        if (projectModel.isFavorite) {
+            this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item));
+        } else {
+            this.favoriteDao.removeFavoriteItem(key);
+        }
+    }
+
+    renderRightButton() {
+        return (<View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+                onPress={() => this.onFavoriteButtonClick()}>
+                <FontAwesome
+                    name={this.state.isFavorite ? 'star' : 'star-o'}
+                    size={20}
+                    style={{ color: 'white', marginRight: 10 }}
+                />
+            </TouchableOpacity>
+        </View>
+        )
+    }
+
     render() {
 
         const { theme } = this.params;
@@ -64,6 +94,7 @@ export default class DetailPage extends Component {
             titleLayoutStyle={titleLayoutStyle}
             title={this.state.title}
             style={[styles.navBar, theme.styles.navBar]}
+            rightButton={this.renderRightButton()}
         />;
 
         return (

@@ -12,6 +12,8 @@ import Toast from 'react-native-easy-toast';
 import FavoriteDao from "../expand/FavoriteDao";
 import { FLAG_STORAGE } from "../expand/DataStore";
 import FavoriteUtil from '../util/FavoriteUtil';
+import EventBus from 'react-native-event-bus';
+import EventTypes from '../util/EventTypes';
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -90,10 +92,25 @@ class PopularTab extends Component {
         super(props);
         const { tabLabel } = this.props;
         this.storeName = tabLabel;
+        this.isFavoriteChanged = false;
     }
 
     componentDidMount() {
         this.loadData();
+        EventBus.getInstance().addListener(EventTypes.favorite_changed_popular, this.favoriteChangeListener = () => {
+            this.isFavoriteChanged = true;
+        });
+        EventBus.getInstance().addListener(EventTypes.bottom_tab_select, this.bottomTabSelectListener = (data) => {
+            if (data.to === 0 && this.isFavoriteChanged) {
+                this.loadData(null, true);
+                this.isFavoriteChanged = false;
+            }
+        })
+    }
+
+    componentWillUnmount() {
+        EventBus.getInstance().removeListener(this.favoriteChangeListener);
+        EventBus.getInstance().removeListener(this.bottomTabSelectListener);
     }
 
     loadData(loadMore, refreshFavorite) {

@@ -11,6 +11,8 @@ import Toast from 'react-native-easy-toast';
 import PopularItem from '../common/PopularItem';
 import NavigationUtil from '../navigator/NavigationUtil';
 import FavoriteUtil from '../util/FavoriteUtil';
+import EventBus from 'react-native-event-bus';
+import EventTypes from '../util/EventTypes';
 
 class FavoritePage extends Component {
 
@@ -70,6 +72,15 @@ class FavoriteTab extends Component {
 
     componentDidMount() {
         this.loadData(true);
+        EventBus.getInstance().addListener(EventTypes.bottom_tab_select, this.listener = data => {
+            if (data.to === 2) {
+                this.loadData(false);
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        EventBus.getInstance().removeListener(this.listener);
     }
 
     loadData(isShowLoading) {
@@ -97,7 +108,11 @@ class FavoriteTab extends Component {
 
     onFavorite(item, isFavorite) {
         FavoriteUtil.onFavorite(this.favoriteDao, item, isFavorite, this.props.flag);
-
+        if (this.storeName === FLAG_STORAGE.flag_popular) {
+            EventBus.getInstance().fireEvent(EventTypes.favorite_changed_popular);
+        } else {
+            EventBus.getInstance().fireEvent(EventTypes.favoriteChanged_trending);
+        }
     }
 
     renderItem(data) {

@@ -9,6 +9,8 @@ import { createAppContainer } from "react-navigation";
 import { BottomTabBar, createBottomTabNavigator } from "react-navigation-tabs";
 import FavoritePage from "../page/FavoritePage";
 import { connect } from "react-redux";
+import EventBus from 'react-native-event-bus'
+import EventTypes from "../util/EventTypes";
 
 
 //在这里配置页面的路由
@@ -91,7 +93,7 @@ class DynamicTabNavigator extends Component {
             tabs,
             {
                 tabBarComponent: props => {
-                    return <TabBarComponent theme={this.props.theme}{...props}/>;
+                    return <TabBarComponent theme={this.props.theme}{...props} />;
                 },
             }
         ))
@@ -99,7 +101,14 @@ class DynamicTabNavigator extends Component {
 
     render() {
         const Tab = this._tabNavigator();
-        return <Tab></Tab>
+        return <Tab
+            onNavigationStateChange={(prevState, newState, action) => {
+                EventBus.getInstance().fireEvent(EventTypes.bottom_tab_select, {//发送底部tab切换的事件
+                    from: prevState.index,
+                    to: newState.index
+                })
+            }}
+        ></Tab>
     }
 
 }
@@ -136,7 +145,7 @@ class TabBarComponent extends Component {
     render() {
         return <BottomTabBar
             {...this.props}
-            activeTintColor={this.props.theme}
+            activeTintColor={this.props.theme.themeColor}
         />;
     }
 
