@@ -26,7 +26,12 @@ const MainNavigator = createStackNavigator({
         },
     },
     //详情页
-    DetailPage: DetailPage,
+    DetailPage: {
+        screen: DetailPage,
+        navigationOptions: {
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        },
+    },
     FetchDemoPage: FetchDemoPage,
     AsyncStorageDemoPage: AsyncStorageDemoPage,
 });

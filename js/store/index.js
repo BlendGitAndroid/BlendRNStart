@@ -37,7 +37,7 @@ const logger1 = function (store) {
 
 const middlewares = [
     thunk,
-    logger,
+    // logger,
 ]
 
 /**
