@@ -20,6 +20,10 @@ export default class BaseItem extends Component {
     /**
      * 牢记：https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md
      * componentWillReceiveProps在新版React中不能再用了
+     * 
+     * getDerivedStateFromProps 会在调用 render 方法之前调用，即在渲染 DOM 元素之前会调用，并且在初始挂载及后续更新时都会被调用。
+     * state 的值在任何时候都取决于 props。
+     * getDerivedStateFromProps 的存在只有一个目的：让组件在 props 变化时更新 state。
      * @param nextProps
      * @param prevState
      * @returns {*}
@@ -36,6 +40,7 @@ export default class BaseItem extends Component {
     }
 
     setFavoriteState(isFavorite) {
+        //下面的这种写法其实是不对的，因为是单向数据流，不能这样改数据
         this.props.projectModel.isFavorite = isFavorite;
         this.setState({
             isFavorite: isFavorite,
