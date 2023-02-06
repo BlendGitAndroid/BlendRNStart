@@ -2,8 +2,11 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import AsyncStorageDemoPage from "../../demo/AsyncStorageDemoPage";
 import FetchDemoPage from "../../demo/FetchDemoPage";
+import AboutMePage from "../page/about/AboutMePage";
+import AboutPage from "../page/about/AboutPage";
 import DetailPage from "../page/DetailPage";
 import HomePage from "../page/HomePage";
+import WebViewPage from "../page/WebViewPage";
 import WelcomePage from "../page/WelcomePage";
 
 const InitNavigator = createStackNavigator(
@@ -28,6 +31,24 @@ const MainNavigator = createStackNavigator({
     //详情页
     DetailPage: {
         screen: DetailPage,
+        navigationOptions: {
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        },
+    },
+    WebViewPage: {
+        screen: WebViewPage,
+        navigationOptions: {
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        },
+    },
+    AboutPage: {
+        screen: AboutPage,
+        navigationOptions: {
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        },
+    },
+    AboutMePage: {
+        screen: AboutMePage,
         navigationOptions: {
             headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
         },

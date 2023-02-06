@@ -1,0 +1,73 @@
+{
+  "aboutMe": {
+    "Tutorial": {
+      "name": "Blend",
+      "icon": "ios-bookmarks",
+      "items": [
+        {
+          "title": "React Native基础教程",
+          "url": "https://zh-hans.reactjs.org/docs/getting-started.html"
+        },
+        {
+          "title": "React Native高级实战教程",
+          "url": "https://www.react-native.cn/docs/getting-started"
+        }
+      ]
+    },
+    "Blog": {
+      "name": "技术博客",
+      "icon": "ios-laptop",
+      "items": [
+        {
+          "title": "个人博客",
+          "url": "https://github.com/BlendAndroid"
+        },
+        {
+          "title": "CSDN",
+          "url": "https://github.com/BlendAndroid"
+        },
+        {
+          "title": "GitHub",
+          "url": "https://github.com/BlendAndroid"
+        },
+        {
+          "title": "掘金",
+          "url": "https://github.com/BlendAndroid"
+        }
+      ]
+    },
+    "Contact": {
+      "name": "联系方式",
+      "icon": "ios-contacts",
+      "items": {
+        "QQ": {
+          "title": "QQ",
+          "account": "1059152860"
+        },
+        "Email": {
+          "title": "Email",
+          "account": "xh2019@163.com"
+        }
+      }
+    }
+  },
+  
+  "info": {
+    "html_url": "https://github.com/crazycodeboy/",
+    "url": "https://api.github.com/repos/crazycodeboy/",
+    "currentRepoUrl": "https://api.github.com/repos/crazycodeboy/GitHubPopular"
+  },
+  "author": {
+    "name": "BlendAndroid",
+    "description": "每天进步一点一点，每天学习一小步",
+    "avatar": "http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg",
+    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg",
+    "url": "http://www.devio.org/"
+  },
+  "app": {
+    "name": "GitHub Popular",
+    "description": "这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。",
+    "avatar": "http://www.devio.org/io/GitHubPopular/img/ic_app.png",
+    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg"
+  }
+}
