@@ -4,6 +4,7 @@ import AsyncStorageDemoPage from "../../demo/AsyncStorageDemoPage";
 import FetchDemoPage from "../../demo/FetchDemoPage";
 import AboutMePage from "../page/about/AboutMePage";
 import AboutPage from "../page/about/AboutPage";
+import CustomKeyPage from "../page/CustomKeyPage";
 import DetailPage from "../page/DetailPage";
 import HomePage from "../page/HomePage";
 import WebViewPage from "../page/WebViewPage";
@@ -49,6 +50,12 @@ const MainNavigator = createStackNavigator({
     },
     AboutMePage: {
         screen: AboutMePage,
+        navigationOptions: {
+            headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        },
+    },
+    CustomKeyPage: {
+        screen: CustomKeyPage,
         navigationOptions: {
             headerShown: false,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
         },

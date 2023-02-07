@@ -31,6 +31,7 @@ class TrendingPage extends Component {
         };
         const { onLoadLanguage } = this.props;
         onLoadLanguage(FLAG_LANGUAGE.flag_language);
+        //如果上一次的key和这一次的key一样，就不需要渲染
         this.preKeys = [];
     }
 

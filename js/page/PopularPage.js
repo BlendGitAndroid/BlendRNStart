@@ -72,7 +72,7 @@ class PopularPage extends Component {
                     indicatorStyle: styles.indicatorStyle,  //指示器的样式
                     labelStyle: styles.labelStyle,  //label的样式
                 },
-                lazy: true
+                lazy: true  //懒加载
             }
         )) : null;
         return (

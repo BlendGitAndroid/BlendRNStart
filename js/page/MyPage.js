@@ -9,6 +9,7 @@ import GlobalStyles from "../res/styles/GlobalStyles"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ViewUtil from "../util/ViewUtil";
 import NavigationUtil from '../navigator/NavigationUtil';
+import { FLAG_LANGUAGE } from '../expand/LanguageDao';
 
 class MyPage extends Component {
 
@@ -42,7 +43,6 @@ class MyPage extends Component {
             case MORE_MENU.Custom_Key:
             case MORE_MENU.Custom_Language:
             case MORE_MENU.Remove_Key:
-                RouteName = 'CustomKeyPage';
                 RouteName = 'CustomKeyPage';
                 params.isRemoveKey = menu === MORE_MENU.Remove_Key;
                 params.flag = menu !== MORE_MENU.Custom_Language ? FLAG_LANGUAGE.flag_key : FLAG_LANGUAGE.flag_language;
