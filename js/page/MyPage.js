@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import ViewUtil from "../util/ViewUtil";
 import NavigationUtil from '../navigator/NavigationUtil';
 import { FLAG_LANGUAGE } from '../expand/LanguageDao';
+import AndroidUtil from '../util/AndroidUtil'
 
 class MyPage extends Component {
 
@@ -21,6 +22,8 @@ class MyPage extends Component {
                 RouteName = 'WebViewPage';
                 params.title = '教程';
                 params.url = 'https://zh-hans.reactjs.org/docs/getting-started.html';
+                //与原生交互，调用原生的方法
+                AndroidUtil.toToast("与原生交互的测试Toast");
                 break;
             case MORE_MENU.About:
                 RouteName = 'AboutPage';
