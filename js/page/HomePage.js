@@ -2,19 +2,34 @@ import React, { Component } from 'react';
 import DynamicTabNavigator from "../navigator/DynamicTabNavigator";
 import NavigationUtil from "../navigator/NavigationUtil";
 import { connect } from 'react-redux';
+import actions from '../action';
+import { View } from 'react-native';
+import CustomTheme from './CustomTheme';
 
 class HomePage extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    render() {
-        //FIX DynamicTabNavigator中的页面无法跳转到外层导航器页面的问题
-        NavigationUtil.navigation = this.props.navigation;
-        return <DynamicTabNavigator />;
+    renderCustomThemeView() {
+        const { customThemeViewVisible, onShowCustomThemeView } = this.props;
+        return (<CustomTheme
+            visible={customThemeViewVisible}
+            {...this.props}
+            onClose={() => onShowCustomThemeView(false)}
+        />);
     }
 
+    render() {
+        const { theme } = this.props;
+        NavigationUtil.navigation = this.props.navigation;
+        //注意：这里要有{ flex: 1 }，才能显示出来
+        return <View style={{ flex: 1 }}>
+            <DynamicTabNavigator />
+            {this.renderCustomThemeView()}
+        </View>;
+    }
 }
 
 const mapStateToProps = state => ({
