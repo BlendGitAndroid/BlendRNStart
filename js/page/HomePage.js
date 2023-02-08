@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import actions from '../action';
 import { View } from 'react-native';
 import CustomTheme from './CustomTheme';
+import SafeAreaViewPlus from '../common/SafeAreaViewPlus';
 
 class HomePage extends Component {
 
@@ -25,10 +26,16 @@ class HomePage extends Component {
         const { theme } = this.props;
         NavigationUtil.navigation = this.props.navigation;
         //注意：这里要有{ flex: 1 }，才能显示出来
-        return <View style={{ flex: 1 }}>
+        // return <View style={{ flex: 1 }}>
+        //     <DynamicTabNavigator />
+        //     {this.renderCustomThemeView()}
+        // </View>;
+        //适配全面屏
+        return <SafeAreaViewPlus
+            topColor={theme.themeColor}>
             <DynamicTabNavigator />
             {this.renderCustomThemeView()}
-        </View>;
+        </SafeAreaViewPlus>;
     }
 }
 
