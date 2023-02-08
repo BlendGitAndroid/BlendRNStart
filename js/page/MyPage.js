@@ -23,7 +23,9 @@ class MyPage extends Component {
                 params.title = '教程';
                 params.url = 'https://zh-hans.reactjs.org/docs/getting-started.html';
                 //与原生交互，调用原生的方法
-                AndroidUtil.toToast("与原生交互的测试Toast");
+                AndroidUtil.toToast("与原生交互的测试Toast", (code, message) => {
+                    NavigationUtil.goPage(params, RouteName);
+                });
                 break;
             case MORE_MENU.About:
                 RouteName = 'AboutPage';
@@ -54,7 +56,7 @@ class MyPage extends Component {
                 RouteName = 'AboutMePage';
                 break;
         }
-        if (RouteName) {
+        if (RouteName && menu != MORE_MENU.Tutorial) {
             NavigationUtil.goPage(params, RouteName);
         }
     }

@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -26,7 +27,8 @@ public class JsToAndroidModule extends ReactContextBaseJavaModule {
 
     //这里要用ReactMethod注解
     @ReactMethod
-    public void toToast(String msg) {
+    public void toToast(String msg, Callback callback) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        callback.invoke(0, "success");
     }
 }
