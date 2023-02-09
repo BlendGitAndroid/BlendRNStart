@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from "react-native";
 import NavigationUtil from "../navigator/NavigationUtil";
-
+import SplashScreen from 'react-native-splash-screen'
 
 export default class WelcomePage extends Component {
 
     componentDidMount() {
+        SplashScreen.hide();
         this.timer = setTimeout(() => {
             //跳转到首页
             NavigationUtil.resetToHomePage(this.props);
-        }, 200)
+        }, 500)
     }
 
     componentWillMount() {
@@ -21,7 +22,7 @@ export default class WelcomePage extends Component {
         return (
             <View style={styles.container}>
                 <Text>
-                    WelcomePage
+                    这里是广告页面
                 </Text>
             </View>
         )
