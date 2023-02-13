@@ -1,13 +1,17 @@
 package com.blend.hybridandroid;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.devsupport.DoubleTapReloadRecognizer;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
@@ -19,7 +23,7 @@ import com.facebook.react.shell.MainReactPackage;
  * 通过ReactInstanceManager来创建和加载JS的，然后重写了Activity的生命周期来对ReactInstanceManager进行回调,
  * 另外，重写了onKeyUp来启用开发者菜单等功能。
  */
-public class RNPageActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+public class RNPageActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, IJSBridge {
 
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
@@ -27,6 +31,17 @@ public class RNPageActivity extends AppCompatActivity implements DefaultHardware
     private boolean mDeveloperSupport = true;
     //是否支持双击
     private DoubleTapReloadRecognizer mDoubleTapReloadRecognizer;
+
+    private static String moduleName;
+
+    private DataToJSPresenter dataToJSPresenter;
+
+    public static void start(Context context, String moduleName, String initParams) {
+        RNPageActivity.moduleName = moduleName;
+        Intent intent = new Intent(context, RNPageActivity.class);
+        intent.putExtra("initParams", initParams);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +58,7 @@ public class RNPageActivity extends AppCompatActivity implements DefaultHardware
                 //如果我们创建一些其他的Native Module也需要通过addPackage的方式将其注册到RN中。需要指出的是
                 //RN除了这个方法外，也提供了一个addPackages方法用于批量向RN添加Native Module
                 .addPackage(new MainReactPackage())
+                .addPackage(new JSBridgeReactPackage())
                 //设置RN是否开启开发者模式(debugging，reload，dev menu)，比如我们常用开发者弹框；
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 //通过这个方法来设置RN初始化时所处的生命周期状态，一般设置成LifecycleState.RESUMED就行，
@@ -53,11 +69,13 @@ public class RNPageActivity extends AppCompatActivity implements DefaultHardware
         // 第一个参数是mReactInstanceManager，
         // 第二个参数是我们在index.js中注册的组件的名字，
         // 第三个参数接受一个Bundle来作为RN初始化时传递给JS的初始化数据
-        mReactRootView.startReactApplication(mReactInstanceManager, "App1", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, moduleName, null);
 
         setContentView(mReactRootView);
 
         mDoubleTapReloadRecognizer = new DoubleTapReloadRecognizer();
+
+        dataToJSPresenter = new DataToJSPresenter(mReactInstanceManager, this, "by ReactInstanceManager");
     }
 
 
@@ -138,5 +156,10 @@ public class RNPageActivity extends AppCompatActivity implements DefaultHardware
 
     public boolean getUseDeveloperSupport() {
         return mReactInstanceManager != null && mDeveloperSupport;
+    }
+
+    @Override
+    public void sendMessage(ReadableMap params) {
+        Toast.makeText(this, params.toString(), Toast.LENGTH_LONG).show();
     }
 }
