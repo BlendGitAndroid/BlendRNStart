@@ -50,6 +50,8 @@ public class RNPageActivity extends AppCompatActivity implements DefaultHardware
         mReactRootView = new ReactRootView(this);
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
+                //修复Activity needs to be set if initial lifecycle state is resumed
+                .setCurrentActivity(this)
                 //打包时放在assets目录下的JS bundle包的名字，App release之后会从该目录下加载JS bundle
                 .setBundleAssetName("index.android.bundle")
                 //  JS bundle中主入口的文件名
