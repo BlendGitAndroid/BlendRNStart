@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.newblendrn"
+    namespace "com.blend.hybrid"
     defaultConfig {
-        applicationId "com.newblendrn"
+        applicationId "com.blend.androidhybrid"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

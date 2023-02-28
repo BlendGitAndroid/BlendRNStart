@@ -1,4 +1,4 @@
-package com.newblendrn;
+package com.blend.hybrid;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.newblendrn;
+package com.blend.hybrid;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 

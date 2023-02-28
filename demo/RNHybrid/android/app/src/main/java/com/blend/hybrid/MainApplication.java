@@ -1,4 +1,4 @@
-package com.newblendrn;
+package com.blend.hybrid;
 
 import android.app.Application;
 
@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import com.newblendrn.ReactNativeFlipper;
 
 import java.util.List;
 

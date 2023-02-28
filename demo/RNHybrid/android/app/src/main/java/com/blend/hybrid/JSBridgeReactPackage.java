@@ -1,4 +1,4 @@
-package com.newblendrn;
+package com.blend.hybrid;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
