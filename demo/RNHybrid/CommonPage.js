@@ -1,10 +1,3 @@
-/**
- * React Native JS Native通信 | 混合开发
- * Author: CrazyCodeBoy
- * 技术博文：http://www.devio.org
- * GitHub:https://github.com/crazycodeboy
- * Email:crazycodeboy@gmail.com
- */
 import React, { Component } from 'react';
 import { DeviceEventEmitter, StyleSheet, Text, TextInput, View, NativeModules, NativeEventEmitter } from 'react-native';
 import JSBridge from './JSBridge';
@@ -18,7 +11,7 @@ export default class CommonPage extends Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.testDataListener = DeviceEventEmitter.addListener('testData', e => {//for Android
             this.setState({
                 data: e.data
@@ -32,7 +25,7 @@ export default class CommonPage extends Component {
         })
     }
 
-    componentWillUnmount() {
+    UNSAFE_componentWillUnmount() {
         if (this.testDataListener) {
             this.testDataListener.remove();
         }
