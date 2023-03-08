@@ -12,6 +12,7 @@ export default class CommonPage extends Component {
     }
 
     UNSAFE_componentWillMount() {
+        //监听从原生来的消息
         this.testDataListener = DeviceEventEmitter.addListener('testData', e => {//for Android
             this.setState({
                 data: e.data
@@ -45,6 +46,7 @@ export default class CommonPage extends Component {
                 <View style={styles.input_container}>
                     <TextInput style={styles.input} onChangeText={txt => this.text = txt} />
                     <Text style={styles.button} onPress={() => {
+                        //调用原生的方法
                         JSBridge.sendMessage({ text: this.text })
                     }}>Send data to Native</Text>
                 </View>
@@ -55,6 +57,7 @@ export default class CommonPage extends Component {
                     <TextInput style={styles.input} onChangeText={txt => this.num2 = txt} />
                     <Text>=</Text>
                     <Text style={styles.button} onPress={() => {
+                        //通过接口回调回来
                         JSBridge.doAdd(parseInt(this.num1), parseInt(this.num2)).then(e => {
                             this.setState({
                                 result: e

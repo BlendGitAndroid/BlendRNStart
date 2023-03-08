@@ -24,6 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected List<ReactPackage> getPackages() {
             List<ReactPackage> packages = new PackageList(this).getPackages();
+            //在这里添加原生ReactPackage的集合
             packages.add(new JSBridgeReactPackage());
             return packages;
         }

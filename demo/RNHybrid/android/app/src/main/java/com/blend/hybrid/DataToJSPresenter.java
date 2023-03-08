@@ -64,6 +64,7 @@ public class DataToJSPresenter implements View.OnClickListener {
         if (reactContext == null) {
             return;
         }
+        //发送信息到JS
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
 

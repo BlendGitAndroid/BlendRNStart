@@ -19,6 +19,7 @@ public class JSBridgeReactPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
+        //添加JSBridgeModule，用于JS发送消息到原生
         modules.add(new JSBridgeModule(reactContext));
         return modules;
     }
