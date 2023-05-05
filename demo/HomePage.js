@@ -1,7 +1,15 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 
 export default class HomePage extends React.Component {
+
+    componentDidMount() {
+        SplashScreen.hide();
+        this.timer = setTimeout(() => {
+            
+        }, 500)
+    }
 
     render() {
         const { navigation } = this.props;

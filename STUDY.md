@@ -80,3 +80,6 @@
 20. flex布局
    有一点是position，relative的left,top是视觉位置改变了，但是其真正的位置没有改变
    releave是相对于父布局的  
+
+21. react-navigation本项目使用的是4.x版本的，但是小红书项目，使用的是6.x版本的，需要根据官网看使用说明：
+https://reactnavigation.org/docs/4.x/getting-started
