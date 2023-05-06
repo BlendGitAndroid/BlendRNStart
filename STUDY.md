@@ -83,3 +83,32 @@
 
 21. react-navigation本项目使用的是4.x版本的，但是小红书项目，使用的是6.x版本的，需要根据官网看使用说明：
 https://reactnavigation.org/docs/4.x/getting-started
+
+22. redux的使用。
+1）为什么需要redux：redux是一个数据管理框架，它提供了一个叫store的统一数据存储的仓库。store就像是一个数据管理的中间人，让组件之间无需直接进行数据传递。
+   其整体思路是：组件获取数据的时候，所有的数据都是在store中，修改数据的逻辑都是在reducer中，reducer处理完数据后交给store，store再返回给component进行展示；
+                组件修改数据的时候，先发送一个action指令，这个指令到达store，通过store传给reducer，经过reducer逻辑处理后，数据再传给store，这样就展示到component组件上了。
+    总体来看，就是使用store将component和reducer链接起来，store->component用于展示数据，store<->reducer用于逻辑处理
+    整个流程图：
+    ActionCreators ---> Store <---> Reducers
+       ^                  |
+       |                  
+        -------------- Component 
+
+
+2）使用步骤：
+   1. 创建store。
+   2. 创建reducer，reducer返回什么，就在store中能拿到什么。store和reducer是通过Provider建立关系。
+   3. 使用connect，系统有很多组件，但是该传给哪一个组件，需要在component中使用connect。具体的使用就是，
+   4. 使用connect获取数据：connect(State,Dispact)(component)，这个State中存放了存储了整个应用store的数据，从state中取出需要的数据，并通过props传给组件， 组件就能使用了
+   5. 使用connect修改数据:不能直接操作store，需要通过action，组件的触发，需要使用dispatch，传递给action（props.dispatch({type: "指令"})），传递的action通过store给到了reducer，reducer里面的处理函数，第一个参数是state，第二个是action，action里面就包含了刚刚传递的指令
+   6. 使用connet修改数据，传递参数：就是在props.dispatch({type: "指令"})后面加上payload，props.dispatch({type: "指令"，payload: "额外的参数"})，就可以在reducer中通过action.payload来获取到了，本质还是一个对象的传递。
+   7. props.dispatch在项目中可能手写的很多,可以使用bindActionCreators进行自动组装,使用方法是...bindActionCreators({{指令1},{指令2},{指令3}},dispatch),在对象里面包裹一个对象是不行的,所以可以使用...操作符将对象展开
+   8. reducer的拆分与合并,使用combineReducers进行合并。
+   9. MiddleWare中间件，在Action和Store之间增加一个处理过程。
+       ActionCreators ---> MiddleWare ---> Store <---> Reducers
+       ^                                      ^
+       |                                      |
+        -------------------------------- Component 
+    10. 在redux中是同步的，在reducer中计算数据， 但是当需要异步计算数据的时候，不应该放在reducer中，这个时候就需要借助中间件redux-thunk，在action中返回一个函数，在这个函数中接收dispatch，并且完成异步操作；当完成异步操作后，再次调用dispatch将数据交给store，store再交给reducer处理数据，就和之前的流程一样了。
+    redux-thunk是redux的异步请求库，因为redux是同步的，使用的时候，将redux放入middlewares中，执行createStore(store, ...middlewares)就可以了

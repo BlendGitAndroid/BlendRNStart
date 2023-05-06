@@ -6,6 +6,7 @@ import LanguageDao from "../expand/LanguageDao";
  * @param flagKey
  * @returns {function(*)}
  */
+//这就是使用redux-thunk异步处理库，先获取网络数据，再通过dispatch分发给store，store再交给reducer处理
 export function onLoadLanguage(flagKey) {
     return async dispatch => {
         try {

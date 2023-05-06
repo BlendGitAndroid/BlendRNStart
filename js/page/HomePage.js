@@ -40,12 +40,20 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => ({
+    //这个括号括起来的,也是一个对象,记住都是对象
+    //所有的数据都是放在state中
     customThemeViewVisible: state.theme.customThemeViewVisible,
     theme: state.theme.theme,
 });
 
 const mapDispatchToProps = dispatch => ({
-    onShowCustomThemeView: (show) => dispatch(actions.onShowCustomThemeView(show)),
+    //这里是一个对象,对象的属性名是onShowCustomThemeView,属性值是(show) => dispatch(actions.onShowCustomThemeView(show))的匿名函数
+    onShowCustomThemeView: (show) => dispatch(actions.onShowCustomThemeView1(show)),
+
+    //下面的是上面的全部写法
+    // onShowCustomThemeView(show) {
+    //     dispatch(actions.onShowCustomThemeView(show))
+    // }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

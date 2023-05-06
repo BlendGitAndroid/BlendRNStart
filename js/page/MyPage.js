@@ -175,7 +175,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onShowCustomThemeView: (show) => dispatch(actions.onShowCustomThemeView(show)),
+    onShowCustomThemeView: (show) => dispatch(actions.onShowCustomThemeView1(show)),
 });
 
 //注意：connect只是个function，并不应定非要放在export后面
