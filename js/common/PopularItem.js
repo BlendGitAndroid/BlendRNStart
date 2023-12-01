@@ -38,7 +38,7 @@ export default class PopularItem extends BaseItem {
     }
 }
 const styles = StyleSheet.create({
-        cell_container: {
+        cell_container: {   // 当FlatList的item没有设置宽度时，默认宽度是100%。这意味着item会自动填充FlatList的宽度，使其占据整个可用空间
             backgroundColor: 'white',
             padding: 10,
             marginLeft: 5,
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
             shadowOffset: {width: 0.5, height: 0.5},
             shadowOpacity: 0.4,
             shadowRadius: 1,
-            elevation: 2
+            elevation: 2,
+            flexDirection: 'column',
         },
         row: {
             justifyContent: 'space-between',
@@ -63,8 +64,8 @@ const styles = StyleSheet.create({
             marginBottom: 2,
             color: '#212121',
         },
+        fontSize: 14,
         description: {
-            fontSize: 14,
             marginBottom: 2,
             color: '#757575',
         }

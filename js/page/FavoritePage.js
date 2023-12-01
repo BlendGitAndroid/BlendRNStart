@@ -75,6 +75,7 @@ class FavoriteTab extends Component {
         this.loadData(true);
         EventBus.getInstance().addListener(EventTypes.bottom_tab_select, this.listener = data => {
             if (data.to === 2) {
+                console.log('FavoritePage');
                 this.loadData(false);
             }
         });

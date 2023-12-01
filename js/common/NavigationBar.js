@@ -1,6 +1,6 @@
-import React,{Component} from 'react'
-import {ViewPropTypes, Text, StatusBar, StyleSheet, View, Platform,DeviceInfo} from 'react-native'
-import {PropTypes} from 'prop-types';
+import React, { Component } from 'react'
+import { ViewPropTypes, Text, StatusBar, StyleSheet, View, Platform, DeviceInfo } from 'react-native'
+import { PropTypes } from 'prop-types';
 
 const NAV_BAR_HEIGHT_IOS = 44;//导航栏在iOS中的高度
 const NAV_BAR_HEIGHT_ANDROID = 50;//导航栏在Android中的高度
@@ -12,8 +12,13 @@ const StatusBarShape = {//设置状态栏所接受的属性
     backgroundColor: PropTypes.string,
 };
 export const NAVIGATION_BAR_HEIGHT = NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT;
+
+// 定义顶部导航栏样式
 export default class NavigationBar extends Component {
+
     //提供属性的类型检查
+    //在React中，可以使用`static propTypes`来提供属性的类型检查。`propTypes`是一个静态属性，用于声明组件
+    //接受的属性的类型，以及是否是必需的。通过在组件中定义`propTypes`，可以在开发过程中检查属性的类型是否符合预期，从而提前发现潜在的错误。
     static propTypes = {
         style: ViewPropTypes.style,
         title: PropTypes.string,
@@ -24,6 +29,9 @@ export default class NavigationBar extends Component {
         rightButton: PropTypes.element,
         leftButton: PropTypes.element,
     };
+
+    //`defaultProps`是一个静态属性，用于为React组件的属性设置默认值。
+    //当父组件没有为子组件传递某个属性时，子组件将使用`defaultProps`中定义的默认值。
     //设置默认属性
     static defaultProps = {
         statusBar: {

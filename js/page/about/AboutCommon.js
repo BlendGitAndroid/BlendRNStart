@@ -78,6 +78,7 @@ export default class AboutCommon {
 
     }
 
+    // `ParallaxScrollView`是一个可以实现视差滚动效果的React Native组件。它允许在滚动时，一些组件以不同的速度和方向运动，从而创建出一种立体和动态的效果。
     render(contentView, params) {
         const {theme}=this.props;
         const renderConfig = this.getParallaxRenderConfig(params);

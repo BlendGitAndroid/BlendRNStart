@@ -8,10 +8,11 @@ import {
     ActivityIndicator
 } from 'react-native';
 
-const CITY_NAMES = [{ data: ['北京', '上海', '广州', '深圳'], title: "一线" }, {
-    data: ['杭州', '苏州', '成都', '武汉',],
-    title: "二三线1"
-}, { data: ['郑州', '洛阳', '厦门', '青岛', '拉萨'], title: "二三线2" }];
+// 其实不一定是type
+const CITY_NAMES = [{ data: ['北京', '上海', '广州', '深圳'], title: "一线" },
+{ data: ['杭州', '苏州', '成都', '武汉',], title: "二三线1" },
+{ data: ['郑州', '洛阳', '厦门', '青岛', '拉萨'], title: "二三线2" }
+];
 export default class SectionListDemo extends Component {
     constructor(props) {
         super(props);

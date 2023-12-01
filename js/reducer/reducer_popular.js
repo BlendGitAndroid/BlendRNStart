@@ -23,8 +23,8 @@ export default function onAction(state = defaultState, action) {
         case Types.POPULAR_REFRESH_SUCCESS://下拉刷新成功
             return {
                 ...state,
-                [action.storeName]: {//这里为了从action中取出storeName并作为{}中的key使用所以需要借助[]，否则会js语法检查不通过
-                    ...state[action.storeName],//这里是为了解构state中action.storeName对应的属性，所以需要用到[]
+                [action.storeName]: {//这种写法是ES6中的计算属性名，这个写法在Redux中通常用于动态地更新或者添加对象的属性。
+                    ...state[action.storeName],//这里是先从state中取出storeName对应的对象，并进行解构
                     items: action.items,//原始数据
                     projectModels: action.projectModels,//此次要展示的数据
                     isLoading: false,

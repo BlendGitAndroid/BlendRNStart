@@ -1,10 +1,10 @@
 # RN学习记录
 
 1. `AppState` 可以告诉应用程序是在前台还是在后台，并在状态改变时通知你。
-2. `Modux` 状态管理库
+2. `redux` 状态管理库
 3. React Context的学习，当你不想在组件树中通过逐层传递或者的方式来传递数据时，可以使用来实现跨层级的组件数据传递。
-4. refs：(1)可以使用refs来存储DOM节点的引用，及为DOM添加ref     (2)回调refs，会传递一个函数，这个函数接受React组件实例或DOM元素作为参数，以便他们能在
-   其他的地方被存储和访问。项目中使用的是第二种。
+4. refs：(1)可以使用refs来存储DOM节点的引用，及为DOM添加ref     
+         (2)回调refs，会传递一个函数，这个函数接受React组件实例或DOM元素作为参数，以便他们能在其他的地方被存储和访问。项目中使用的是第二种。
 5. Effect Hook 不编写class的情况下，使用state以及其他的react特性.
 6. Promise，使用async和await字段时，这个promise状态变为fulfilled才会执行await后续的代码，所以await后面的代码，相当于包括在.then方法的回调中，如果状态
    变为rejected，你则需要在函数内部try catch，或者进行链式调用进行.catch操作。

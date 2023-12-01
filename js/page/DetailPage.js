@@ -59,11 +59,12 @@ export default class DetailPage extends Component {
     onFavoriteButtonClick() {
         const { projectModel, callback } = this.params;
         const isFavorite = projectModel.isFavorite = !projectModel.isFavorite;
-        callback(isFavorite);//更新Item的收藏状态
+        callback(isFavorite);
         this.setState({
             isFavorite: isFavorite,
         });
         let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString();
+        //更新Item的收藏状态
         if (projectModel.isFavorite) {
             this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item));
         } else {

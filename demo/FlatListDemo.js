@@ -26,6 +26,7 @@ const CITY_NAMES = [
 export default class FlatListDemo extends Component {
     constructor(props) {
         super(props);
+        // 只会在组件初始化的时候调用一次
         this.state = {
             dataArray: CITY_NAMES,
             isLoading: false,

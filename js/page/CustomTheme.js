@@ -30,6 +30,7 @@ class CustomTheme extends Component {
             underlayColor='white'
             onPress={() => this.onSelectTheme(themeKey)}
         >
+            {/* 根据key获取value */}
             <View style={[{ backgroundColor: ThemeFlags[themeKey] }, styles.themeItem]}>
                 <Text style={styles.themeText}>{themeKey}</Text>
             </View>

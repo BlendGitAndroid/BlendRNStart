@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 export default class Page3 extends React.Component {
 
     render() {
+        console.log("Page3.props");
         const { navigation } = this.props;
         const { state, setParams } = navigation;
         const { params } = state;

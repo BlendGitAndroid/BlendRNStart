@@ -65,7 +65,7 @@ export async function _projectModels(showItems, favoriteDao, callback) {
     doCallBack(callback,projectModels);
 }
 export const doCallBack = (callBack, object) => {
-    if (typeof callBack === 'function') {
+    if (typeof callBack === 'function') {   // 通过typeof判断callBack是否为函数类型
         callBack(object);
     }
 };

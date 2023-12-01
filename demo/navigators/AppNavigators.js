@@ -91,7 +91,7 @@ const BottomTabNavigator = createBottomTabNavigator(
     },
     {
         tabBarOptions: {
-            activeTintColor: 'red'
+            activeTintColor: 'red'  //默认配置
         }
     }
 )
