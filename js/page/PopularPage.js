@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
 
 /**
  * 将dispatch加入到Props中
- * mapDispatchToProps其实是一个方法，dispatch是一个入参，
+ * mapDispatchToProps其实是一个函数（方法），dispatch是一个入参，
  * 里面是一个key:value的形式，只不过这个value是一个方法的返回值
  *  
  */
@@ -286,12 +286,24 @@ const styles = StyleSheet.create({
  * 
  * 
  */
+
+// 这段代码是在使用 Redux 库的一个常见模式。mapPopularStateToProps 是一个函数，它的作用是将 Redux store 中的状态映射到 React 组件的 props 上。
+// 在这个函数中，我们接收一个参数 state，这个 state 就是 Redux store 中的状态。然后我们返回一个对象，这个对象定义了我们想要映射到 props 的状态。
+// 在这个例子中，我们映射了 state.language.keys 到 keys，并映射 state.theme.theme 到 theme。这意味着在我们的组件中，我们可以通过 this.props.keys 
+// 和 this.props.theme 来访问这些状态。
 const mapPopularStateToProps = state => ({
     keys: state.language.keys,
     theme: state.theme.theme,
 });
+
+// 这段代码是在使用 Redux 库的一个常见模式。mapDispatchToProps 是一个函数，它的作用是将 Redux store 中的 dispatch 方法映射到 React 组件的 props 上。
+// 在这个函数中，我们接收一个参数 dispatch，这个 dispatch 就是 Redux store 的 dispatch 方法。然后我们返回一个对象，这个对象定义了我们想要映射到 props 的方法。
+// 在这个例子中，我们映射了 actions.onLoadLanguage 到 onLoadLanguage。这意味着在我们的组件中，我们可以通过 this.props.onLoadLanguage 来访问这个方法。
+// 这个方法接收一个参数 flag，然后调用 dispatch(actions.onLoadLanguage(flag)) 来改变 Redux store 中的状态。
 const mapPopularDispatchToProps = dispatch => ({
     onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag))
 });
+
+
 //注意：connect只是个function，并不应定非要放在export后面
 export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(PopularPage);

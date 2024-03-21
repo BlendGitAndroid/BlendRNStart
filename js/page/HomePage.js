@@ -24,7 +24,11 @@ class HomePage extends Component {
 
     render() {
         const { theme } = this.props;
+
+        // 为了让所有页面都能拿到navigation，这里将navigation传递给NavigationUtil
+        // js中，变量在NavigationUtil中没有定义，但是也可以直接赋值
         NavigationUtil.navigation = this.props.navigation;
+
         //注意：这里要有{ flex: 1 }，才能显示出来
         // return <View style={{ flex: 1 }}>
         //     <DynamicTabNavigator />
@@ -34,6 +38,8 @@ class HomePage extends Component {
         return <SafeAreaViewPlus
             topColor={theme.themeColor}>
             <DynamicTabNavigator />
+            {/* 在 JSX 中，如果你想要调用 JavaScript 函数并将其返回值插入到 JSX 中，你需要使用 {}。所以，
+            如果你直接写 this.renderCustomThemeView() 而不使用 {}，那么它将被视为纯文本，而不是一个函数调用。 */}
             {this.renderCustomThemeView()}
         </SafeAreaViewPlus>;
     }

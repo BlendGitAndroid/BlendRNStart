@@ -112,3 +112,15 @@ https://reactnavigation.org/docs/4.x/getting-started
         -------------------------------- Component 
     10. 在redux中是同步的，在reducer中计算数据， 但是当需要异步计算数据的时候，不应该放在reducer中，这个时候就需要借助中间件redux-thunk，在action中返回一个函数，在这个函数中接收dispatch，并且完成异步操作；当完成异步操作后，再次调用dispatch将数据交给store，store再交给reducer处理数据，就和之前的流程一样了。
     redux-thunk是redux的异步请求库，因为redux是同步的，使用的时候，将redux放入middlewares中，执行createStore(store, ...middlewares)就可以了
+    11. 在 Redux 中，`dispatch` 方法确实是将 action 分发到 store，但实际上，store 会将这个 action 传递给 reducer 来处理。
+    当你调用 `dispatch({type: 'SOME_TYPE', payload: someData})` 时，Redux store 会将这个 action 对象传递给与之关联的 reducer。reducer 是一个纯函数，
+    它接收当前的 state 和一个 action，然后返回新的 state。所以，虽然你是将 action 分发到 store，但实际上，是 reducer 在处理这个 action 并返回新的 state。store 会保存这个新的 state，然后通知所有的订阅者（通常是 UI 组件）state 已经更新。
+    所以，你可以理解为 `dispatch` 是将 action 分发给 reducer，通过 reducer 来更新 store 的 state。
+23. 在 Redux 中，计算属性名（Computed Property Name）和对象扩展运算符（Object Spread Operator）是 ES6 的特性，常常被用于处理 action。
+    1. **计算属性名**：在对象字面量中，你可以使用方括号 `[]` 来创建计算属性名。这意味着，你可以使用变量来定义属性名。例如，`let key = 'name'; 
+    let obj = {[key]: 'GitHub Copilot'};`，这将创建一个对象，其属性名为 "name"，属性值为 "GitHub Copilot"。
+    2. **对象扩展运算符**：对象扩展运算符 `...` 可以用于从一个对象复制属性到另一个新的对象。例如，`let obj1 = {a: 1, b: 2}; 
+    let obj2 = {...obj1, c: 3};`，这将创建一个新的对象 `obj2`，它包含了 `obj1` 的所有属性，并添加了一个新的属性 `c`。
+    在 Redux 的 reducer 中，这两个特性常常一起使用，用于创建新的 state。例如，[action.storeName]: {...state[action.storeName], isLoading: true}，
+    这将创建一个新的对象，其属性名由 action.storeName 决定，属性值是一个新的对象，这个新的对象包含了 state[action.storeName] 的所有属性，并添加了一个
+    新的属性 isLoading。
